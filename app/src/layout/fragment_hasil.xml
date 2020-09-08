@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppThemeHome"
+    tools:context=".FragmentHasil">
+
+    <RelativeLayout
+        android:id="@+id/rv_header"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/color_red_gradient">
+
+        <TextView
+            android:id="@+id/tv_header"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="50dp"
+            android:text="Hasil Perolehan Suara"
+            android:textColor="#fff"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvPerolehan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_header"
+            android:layout_centerHorizontal="true"
+            android:text="PILKADA Sumatera Utara"
+            android:textColor="#fff"
+            android:textSize="24dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tvPerolehan"
+            android:layout_centerHorizontal="true"
+            android:text="##noGolput#PILKADABersih"
+            android:textColor="#fff"
+            android:textSize="18dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_hasil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rv_header"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="-100dp" />
+
+    <View
+        android:id="@+id/ruler"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true" />
+
+    <TextView
+        android:id="@+id/tv_sisaSuara"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignLeft="@id/ruler"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rectangle"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="Sisa Suara: 00.00%"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16dp"
+        tools:ignore="RtlCompat" />
+
+    <TextView
+        android:id="@+id/tv_masukSuara"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignRight="@id/ruler"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/rectangle"
+        android:gravity="center_vertical"
+        android:padding="10dp"
+        android:text="Suara Masuk: 00.00%"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textSize="16dp"
+        tools:ignore="RtlCompat" />
+
+</RelativeLayout>

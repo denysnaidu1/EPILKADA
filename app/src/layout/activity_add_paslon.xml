@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".AddPaslon">
+
+    <TextView
+        android:textColor="#000"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NIK Ketua" />
+
+    <EditText
+        android:id="@+id/edNIK1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="nik ketua paslon" />
+
+    <TextView
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="NIK Wakil" />
+
+    <EditText
+        android:id="@+id/edNIK2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="nik wakil paslon" />
+
+    <TextView
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Ketua Paslon" />
+
+    <EditText
+        android:id="@+id/edNama1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="nama ketua paslon" />
+
+    <TextView
+        android:textColor="#000"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Nama Wakil Paslon" />
+
+    <EditText
+        android:id="@+id/edNama2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="nama wakil paslon" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:id="@+id/tvPartai"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama Partai" />
+        <EditText
+            android:layout_below="@id/tvPartai"
+            android:id="@+id/edPartai"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:hint="masukkan nama partai" />
+        <TextView
+            android:textColor="#000"
+            android:layout_marginTop="20dp"
+            android:id="@+id/tvNomor"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nomor Paslon" />
+
+        <NumberPicker
+            android:layout_marginRight="20dp"
+            android:layout_below="@id/tvNomor"
+            android:layout_alignParentRight="true"
+            android:id="@+id/npNomor"
+            android:layout_width="50dp"
+            android:layout_height="50dp"/>
+    </RelativeLayout>
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textColor="#000"
+        android:text="Foto:"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_marginTop="10dp"
+            android:onClick="addFoto"
+            android:background="@drawable/rectangle"
+            android:scaleType="fitXY"
+            android:id="@+id/ivFoto"
+            android:layout_width="150dp"
+            android:layout_height="150dp"/>
+
+        <ImageView
+            android:id="@+id/iv_temp"
+            android:layout_marginLeft="60dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="70dp"
+            android:onClick="addFoto"
+            android:scaleType="fitCenter"
+            android:src="@drawable/icon_add" />
+
+    </RelativeLayout>
+
+    <Button
+        android:padding="10dp"
+        android:textColor="#fff"
+        android:onClick="tambahPaslon"
+        android:layout_marginTop="20dp"
+        android:layout_gravity="center"
+        android:background="@color/colorPrimary"
+        android:text="Tambahkan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

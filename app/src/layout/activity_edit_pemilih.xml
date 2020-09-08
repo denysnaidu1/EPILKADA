@@ -1,0 +1,348 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".EditPemilih"
+    android:scrollbars="none">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:hint="masukkan NIK"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="NIK:"
+            android:textColor="#000" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/edNIKPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="masukkan nik"
+            android:inputType="number" />
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:hint="masukkan nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nama:"
+            android:textColor="#000" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:id="@+id/edNamaPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="masukkan nama"
+            />
+
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvJK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Jenis Kelamin:"
+                android:textColor="#000" />
+
+            <Spinner
+                android:layout_marginTop="5dp"
+                android:id="@+id/spinnerJKPemilih"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvJK" />
+
+            <TextView
+                android:layout_below="@id/spinnerJKPemilih"
+                android:text="JK -> Laki-laki"
+                android:id="@+id/tvJKLama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <TextView
+                android:layout_marginRight="60dp"
+                android:id="@+id/tvGoldar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:text="Gol. Darah:"
+                android:textColor="#000" />
+
+            <Spinner
+                android:layout_marginTop="5dp"
+                android:id="@+id/spinnerGoldarPemilih"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvGoldar"
+                android:layout_alignParentRight="true" />
+            <TextView
+                android:layout_marginRight="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/spinnerGoldarPemilih"
+                android:text="Gol. Darah -> O"
+                android:id="@+id/tvGoldarLama"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tempat Lahir:"
+            android:textColor="#000" />
+
+        <EditText
+            android:layout_marginTop="5dp"
+            android:hint="masukkan tempat lahir"
+            android:id="@+id/edTempatLahirPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:textColor="#000"
+            android:text="Tanggal Lahir:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <EditText
+            android:focusableInTouchMode="false"
+            android:layout_marginTop="5dp"
+            android:hint="Hari/Bulan/Tahun"
+            android:id="@+id/edTanggalPemilih"
+            android:inputType="date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:textColor="#000"
+            android:text="Alamat:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:layout_marginTop="5dp"
+            android:hint="alamat sesuai e-ktp"
+            android:id="@+id/edAlamatPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/tvRTRW"
+                android:textColor="#000"
+                android:text="RT/RW:                 "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:id="@+id/ed_rtrwPemilih"
+                android:hint="nama rt/rw"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/tvRTRW"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="40dp"
+                android:layout_below="@id/tvRTRW"
+                android:id="@+id/tvKelDesa"
+                android:textColor="#000"
+                android:text="Kelurahan/Desa:"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ed_rtrwPemilih"
+                android:id="@+id/ed_keldesPemilih"
+                android:hint="nama kelurahan/desa"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/tvKelDesa"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/tvKelDesa"
+                android:id="@+id/tv_kecamatan"
+                android:textColor="#000"
+                android:text="Kecamatan:        "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ed_keldesPemilih"
+                android:id="@+id/ed_kecamatanPemilih"
+                android:hint="nama kecamatan"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/tv_kecamatan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/tv_kecamatan"
+                android:id="@+id/tv_kota"
+                android:textColor="#000"
+                android:text="Kota:                    "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ed_kecamatanPemilih"
+                android:id="@+id/ed_kotaPemilih"
+                android:hint="nama kota"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/tv_kota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/tv_kota"
+                android:id="@+id/tv_provinsi"
+                android:textColor="#000"
+                android:text="Provinsi:              "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <EditText
+                android:layout_marginTop="5dp"
+                android:layout_below="@id/ed_kotaPemilih"
+                android:id="@+id/ed_provinsiPemilih"
+                android:hint="nama provinsi"
+                android:layout_marginLeft="50dp"
+                android:layout_toRightOf="@id/tv_provinsi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </RelativeLayout>
+
+        <TextView
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agama:"
+            android:textColor="#000" />
+        <Spinner
+            android:layout_marginTop="5dp"
+            android:id="@+id/spinnerAgamaPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvAgamaLama"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Agama -> "
+            android:textColor="#000" />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:text="Status Perkawinan"
+            android:textColor="#000"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_marginTop="5dp"
+            android:id="@+id/spinnerKawinPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvKawinLama"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Status Perkawinan -> "
+            android:textColor="#000" />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:textColor="#000"
+            android:text="Pekerjaan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_marginTop="5dp"
+            android:id="@+id/spinnerPekerjaanPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvKerjaLama"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Pekerjaan -> "
+            android:textColor="#000" />
+        <TextView
+            android:layout_marginTop="15dp"
+            android:textColor="#000"
+            android:text="Kewarganegaraan:"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <Spinner
+            android:layout_marginTop="5dp"
+            android:id="@+id/spinnerNegaraPemilih"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvNegaraLama"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Warga Negara -> "
+            android:textColor="#000" />
+        <RelativeLayout
+            android:layout_marginTop="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_marginLeft="20dp"
+                android:textSize="16sp"
+                android:id="@+id/tvUnggah"
+                android:text="Unggah Foto (min. 10)"
+                android:layout_toRightOf="@id/iv_image"
+                android:textColor="#000"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:onClick="lihatFoto"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_below="@id/tvUnggah"
+                android:id="@+id/tvHitungFotoLama"
+                android:text="Dipilih: 0 Foto"
+                android:layout_toRightOf="@id/iv_image"
+                android:textColor="#2196F3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:onClick="pilihFoto"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/shape_circle"
+                android:id="@+id/iv_image"
+                android:src="@drawable/ic_add_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp" />
+        </RelativeLayout>
+        <Button
+            android:onClick="updateData"
+            android:id="@+id/btnUpdate"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center_horizontal"
+            android:padding="15dp"
+            android:background="@color/colorPrimary"
+            android:textColor="#fff"
+            android:text="Simpan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</ScrollView>

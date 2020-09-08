@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:columnCount="3"
+    android:layout_width="match_parent" android:layout_height="wrap_content">
+
+    <TextView
+        android:paddingLeft="5dp"
+        android:textSize="16sp"
+        android:layout_height="wrap_content"
+        android:layout_width="15dp"
+        android:id="@+id/tv_idJadwal"
+        android:textColor="#000"
+        android:background="@drawable/rectangle"
+        android:text="-"
+        android:layout_columnWeight="1"/>
+
+    <TextView
+        android:paddingLeft="5dp"
+        android:textSize="16sp"
+        android:layout_width="120dp"
+        android:id="@+id/tvNamaWilayahJadwal"
+        android:textColor="#000"
+        android:background="@drawable/rectangle"
+        android:text="-"
+        android:layout_columnWeight="1"/>
+
+
+    <TextView
+        android:paddingLeft="5dp"
+        android:textSize="16sp"
+        android:layout_width="50dp"
+        android:id="@+id/tvTanggal"
+        android:textColor="#000"
+        android:background="@drawable/rectangle"
+        android:text="-"
+        android:layout_columnWeight="1"/>
+
+</GridLayout>

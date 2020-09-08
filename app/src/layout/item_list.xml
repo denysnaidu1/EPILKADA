@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="40dp"
+    android:orientation="vertical"
+    app:cardCornerRadius="5dp">
+
+    <RelativeLayout
+        android:background="@drawable/rectangle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <TextView
+        android:background="@drawable/rectangle"
+        android:id="@+id/tv_noPaslon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="02"
+        android:textAlignment="center"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="28sp" />
+
+    <ImageView
+        android:layout_below="@id/tv_noPaslon"
+        android:src="@drawable/gambar_pemilu"
+        android:id="@+id/iv_paslon"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp"
+        android:scaleType="fitXY"/>
+
+    <RelativeLayout
+        android:id="@+id/footer"
+        android:layout_below="@id/iv_paslon"
+        android:background="@drawable/rectangle"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:id="@+id/linearKiri"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_calon1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calon Gubernur"
+            android:textColor="#000"
+            />
+        <TextView
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:id="@+id/tv_nama1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Denys Naidu"
+            android:textColor="#000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:id="@+id/linearKanan"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content">
+        <TextView
+            android:layout_gravity="center"
+            android:id="@+id/tv_calon2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calon Wakil Gubernur"
+            android:textColor="#000" />
+        <TextView
+            android:textStyle="bold"
+            android:textSize="18sp"
+           android:layout_gravity="center"
+            android:id="@+id/tv_nama2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nawindas Naidu"
+            android:textColor="#000" />
+        </LinearLayout>
+    </RelativeLayout>
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdminWilayah">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <androidx.appcompat.widget.SearchView
+            android:background="@drawable/rectangle"
+            android:layout_marginTop="20dp"
+            android:id="@+id/searchWilayah"
+            android:layout_width="700dp"
+            android:layout_height="30dp"
+            app:queryHint="cari nama wilayah"
+            android:layout_toLeftOf="@id/ivAdd"/>
+
+        <Button
+            android:textSize="16sp"
+            android:onClick="filterProv"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_shape"
+            android:padding="15dp"
+            android:layout_marginTop="10dp"
+            android:layout_below="@id/searchWilayah"
+            android:id="@+id/btnProvinsi"
+            android:text="Provinsi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:textSize="10sp"
+            android:onClick="filterKabKot"
+            android:background="@drawable/btn_shape_inactive"
+            android:padding="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@id/searchWilayah"
+            android:layout_toRightOf="@id/btnProvinsi"
+            android:id="@+id/btnKabKot"
+            android:text="Kabupaten/Kota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <ImageView
+            android:onClick="addWilayah"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_add"
+            android:layout_marginTop="20dp"
+            android:layout_alignParentRight="true"
+            android:id="@+id/ivAdd"
+            android:layout_width="30dp"
+            android:layout_height="30dp"/>
+    </RelativeLayout>
+    <GridLayout
+        android:layout_marginTop="10dp"
+        android:columnCount="3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:text="ID Wilayah"
+            android:layout_width="15dp"
+            android:layout_columnWeight="1"/>
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:text="Nama Wilayah"
+            android:layout_columnWeight="1"
+            android:layout_width="120dp"/>
+
+
+        <TextView
+            android:layout_width="50dp"
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:text="Jlh Penduduk"
+            android:layout_columnWeight="1"/>
+
+    </GridLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_containerWilayah"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

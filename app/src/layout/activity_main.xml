@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <RelativeLayout
+        android:id="@+id/container_top"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/color_red_gradient">
+
+        <ImageView
+            android:id="@+id/iv_Admin"
+            android:layout_width="40dp"
+            android:layout_height="80dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:contentDescription="iconAdmin"
+            android:onClick="iconAdminAction"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user2" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_Admin"
+            android:layout_alignEnd="@id/iv_Admin"
+            android:layout_alignRight="@id/iv_Admin"
+            android:layout_marginTop="-15dp"
+            android:text="Admin"
+            android:textColor="#ffff"
+            android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/iv_garuda"
+            android:layout_width="200dp"
+            android:layout_height="100dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:contentDescription="iconGaruda"
+            android:src="@drawable/ic_garuda" />
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iv_garuda"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="15dp"
+            android:text="PILKADA INDONESIA 2020"
+            android:textColor="#ffff"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_title"
+            android:layout_centerHorizontal="true"
+            android:text="#noGolput#PILKADABersih"
+            android:textColor="#ffff"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+    </RelativeLayout>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_lihatHasil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/container_top"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="-55dp"
+        android:layout_marginRight="20dp"
+        android:onClick="lihatHasilPemilihan"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_lihatHasil"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/gambar_pemilu"
+                android:contentDescription="gambar voting sementara" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_lihatHasil"
+                android:layout_marginLeft="5dp"
+                android:text="Hasil Pemilihan"
+                android:textColor="#000"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_lihatJadwal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cv_lihatHasil"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        android:onClick="lihatJadwal"
+        app:cardCornerRadius="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/iv_jadwalPilkada"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:background="@drawable/grafik2"
+                android:contentDescription="gambar voting sementara" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_jadwalPilkada"
+                android:layout_marginLeft="5dp"
+                android:text="Jadwal PILKADA"
+                android:textColor="#000"
+                android:textSize="20sp" />
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cv_lihatJadwal"
+        android:layout_alignParentRight="true"
+        android:layout_gravity="end|bottom"
+        android:layout_marginTop="-50dp"
+        android:layout_marginRight="30dp"
+        android:contentDescription="Voting"
+        android:onClick="fabAction"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/ic_voting_foreground"
+        app:fabCustomSize="70dp"
+        app:maxImageSize="113dp" />
+
+</RelativeLayout>
