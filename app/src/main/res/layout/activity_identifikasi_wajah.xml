@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    tools:context=".IdentifikasiWajah">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="15dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:text="Posisikan Wajah Anda Sesuai Dengan Kotak Merah Pada Layar"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary"
+            android:textSize="16sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/frame_identifikasi"
+                android:layout_width="match_parent"
+                android:layout_height="400dp" />
+
+            <View
+                android:id="@+id/view_borderWajah"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_marginLeft="100dp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="100dp"
+                android:background="@drawable/shape" />
+        </RelativeLayout>
+
+        <Button
+            android:id="@+id/btn_Foto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:background="@color/colorPrimary"
+            android:onClick="onCapture"
+            android:padding="10dp"
+            android:text="Foto"
+            android:textColor="#fff" />
+
+        <ImageView
+            android:id="@+id/iv_cropImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tvcroppedImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:text="Cropped Image"
+                android:textColor="#000" />
+
+            <ImageView
+                android:id="@+id/iv_croppedImage"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/tvcroppedImage"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape" />
+
+            <TextView
+                android:id="@+id/tv_croppedGrayscale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="40dp"
+                android:text="Convert ke Grayscale"
+                android:textColor="#000" />
+
+            <ImageView
+                android:id="@+id/iv_testSample"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/tv_croppedGrayscale"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape" />
+
+            <TextView
+                android:id="@+id/tv_mean"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_testSample"
+                android:layout_marginTop="15dp"
+                android:text="Mean dataset"
+                android:textColor="#000" />
+
+            <ImageView
+                android:id="@+id/iv_mean"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/tv_mean"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape" />
+
+            <TextView
+                android:id="@+id/tv_meanTest"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/iv_testSample"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="28dp"
+                android:text="Citra test - mean dataset"
+                android:textColor="#000" />
+
+            <ImageView
+                android:id="@+id/iv_meanTest"
+                android:layout_width="180dp"
+                android:layout_height="200dp"
+                android:layout_below="@id/tv_meanTest"
+                android:layout_alignParentRight="true"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/shape" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Hasil Euclidean Distance WTest dengan WdataSet"
+            android:textColor="#000" />
+
+        <com.jjoe64.graphview.GraphView
+            android:id="@+id/graph_jarak"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/tv_dmin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Distance Min: "
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tv_dmax"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:text="Distance Max: "
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tvThreshold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#000" />
+
+        <TextView
+            android:id="@+id/tv_perbandingan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textColor="#000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:text="Wajah di Database"
+            android:textColor="#000" />
+
+        <ImageView
+            android:id="@+id/iv_recognized"
+            android:layout_width="180dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/shape" />
+
+        <Button
+            android:id="@+id/btnNext"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:enabled="false"
+            android:padding="10dp"
+            android:text="Lanjutkan"
+            android:textColor="#fff" />
+
+    </LinearLayout>
+</ScrollView>

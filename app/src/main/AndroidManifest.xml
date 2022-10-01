@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.toxic.epilkada">
+
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <uses-feature android:name="android.hardware.Camera" />
+    <uses-feature android:name="android.hardware.camera2" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".JadwalActivity"
+            android:label="PILKADA SERENTAK 2020"
+            android:parentActivityName=".MainActivity"/>
+        <activity
+            android:name=".LoginAdmin"
+            android:theme="@style/AppThemeHome" />
+        <activity android:name=".AddJadwal"
+            android:label="Input Jadwal"
+            android:parentActivityName=".AdminJadwal"/>
+        <activity android:name=".EditJadwal"
+            android:label="Edit Jadwal"
+            android:parentActivityName=".AdminJadwal"/>
+        <activity android:name=".AdminJadwal"
+            android:label="Data Jadwal"
+            android:parentActivityName=".AdminMain"/>
+        <activity android:name=".EditPemilih"
+            android:label="Edit Pemilih"
+            android:parentActivityName=".AdminPemilih"/>
+        <activity android:name=".AddPemilih"
+            android:label="Input Pemilih"
+            android:parentActivityName=".AdminPemilih"/>
+        <activity android:name=".AdminPemilih"
+            android:label="Data Pemilih"
+            android:parentActivityName=".AdminMain"/>
+
+        <activity
+            android:name=".EditWilayah"
+            android:label="Edit Wilayah"
+            android:parentActivityName=".AdminWilayah" />
+        <activity
+            android:name=".AddWilayah"
+            android:label="Input Wilayah"
+            android:parentActivityName=".AdminWilayah" />
+        <activity
+            android:name=".AdminWilayah"
+            android:label="Data Wilayah"
+            android:parentActivityName=".AdminMain" />
+        <activity
+            android:name=".AddPemilihan"
+            android:label="Input Pemilihan"
+            android:parentActivityName=".AddPemilihan" />
+        <activity
+            android:name=".EditPemilihan"
+            android:label="Edit Pemilihan"
+            android:parentActivityName=".AddPemilihan" />
+        <activity
+            android:name=".AdminPemilihan"
+            android:label="Data Pemilihan"
+            android:parentActivityName=".AdminMain" />
+        <activity
+            android:name=".EditPaslon"
+            android:label="Edit Data Paslon"
+            android:parentActivityName=".AdminPaslon" />
+        <activity
+            android:name=".AddPaslon"
+            android:label="Input Data Paslon"
+            android:parentActivityName=".AdminPaslon" />
+        <activity
+            android:name=".AdminPaslon"
+            android:label="Data Paslon"
+            android:parentActivityName=".AdminMain" />
+        <activity
+            android:name=".AdminMain"
+            android:theme="@style/AppThemeHome" />
+        <activity
+            android:name=".HasilPemilihan"
+            android:label="Detil Pemilihan"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Pemilihan"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeHome" />
+        <activity
+            android:name=".JenisPemilihan"
+            android:label="Jenis Pemilihan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".IdentifikasiWajah"
+            android:label="Identifikasi Wajah"
+            android:screenOrientation="portrait" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_path" />
+        </provider>
+
+        <activity
+            android:name=".Identifikasi"
+            android:label="Identifikasi E-KTP"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeHome">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.vision.DEPEDENCIES"
+            android:value="ocr" />
+    </application>
+
+</manifest>

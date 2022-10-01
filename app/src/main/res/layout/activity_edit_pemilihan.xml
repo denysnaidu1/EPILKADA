@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="20dp"
+    tools:context=".EditPemilihan">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Id Pasangan Calon"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edPaslon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="masukkan id pasangan calon" />
+
+    <Button
+        android:id="@+id/btnCheck"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:onClick="checkId"
+        android:padding="10dp"
+        android:text="Check ID"
+        android:textColor="#fff" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Pilih Detail Wilayah Pemilihan"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/tvWilayahLama"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="Wilayah Lama -> " />
+
+    <Spinner
+        android:id="@+id/spinnerJenis"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/rectangle"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/spinnerProvinsi"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:clickable="false"
+        android:spinnerMode="dropdown" />
+
+    <Spinner
+        android:id="@+id/spinnerKabKot"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginTop="50dp"
+        android:clickable="false"
+        android:spinnerMode="dropdown"
+        android:tooltipText="Kabupaten Kota" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Jumlah Dukungan (%)"
+        android:textColor="#000"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/edDukungan"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="20" />
+
+    <Button
+        android:id="@+id/btn_lihatHasil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:background="@color/colorPrimary"
+        android:onClick="tambahData"
+        android:padding="15dp"
+        android:text="Simpan"
+        android:textColor="#fff" />
+
+</LinearLayout>

@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdminPaslon">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<androidx.appcompat.widget.SearchView
+    android:background="@drawable/rectangle"
+    android:layout_marginTop="20dp"
+    android:id="@+id/searchPaslon"
+    android:layout_width="700dp"
+    android:layout_height="30dp"
+    app:queryHint="cari id paslon"
+    android:layout_toLeftOf="@id/ivAdd"/>
+       <ImageView
+           android:onClick="addPaslon"
+           android:layout_marginLeft="10dp"
+           android:layout_marginRight="10dp"
+           android:scaleType="centerCrop"
+           android:src="@drawable/icon_add"
+           android:layout_marginTop="20dp"
+           android:layout_alignParentRight="true"
+           android:id="@+id/ivAdd"
+           android:layout_width="30dp"
+           android:layout_height="30dp"/>
+    </RelativeLayout>
+    <GridLayout
+        android:layout_marginTop="20dp"
+        android:columnCount="4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:text="ID"
+            android:layout_width="3dp"
+            android:layout_columnWeight="1"/>
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:text="Ketua"
+            android:layout_columnWeight="1"
+            android:layout_width="100dp"/>
+
+
+        <TextView
+            android:layout_width="100dp"
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:text="Wakil"
+            android:layout_columnWeight="1"/>
+
+        <TextView
+            android:paddingLeft="5dp"
+            android:textSize="16sp"
+            android:textColor="#000"
+            android:background="@drawable/rectangle"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="1"
+            android:text="No."
+            android:layout_width="30dp"/>
+
+        </GridLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_containerPaslon"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+</LinearLayout>

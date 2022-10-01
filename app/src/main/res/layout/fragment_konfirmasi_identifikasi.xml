@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="100dp"
+    android:padding="10dp"
+    tools:context=".KonfirmasiIdentifikasi">
+
+    <TextView
+        android:id="@+id/tv_tanya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Apakah ini benar data Anda?"
+        android:textColor="#000"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/tv_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_tanya"
+        android:layout_marginTop="10dp"
+        android:text="Data:"
+        android:textColor="#000" />
+
+    <Button
+        android:id="@+id/btn_ya"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_data"
+        android:layout_marginTop="50dp"
+        android:background="@color/colorPrimary"
+        android:text="Ya"
+        android:textColor="#ffff" />
+
+    <Button
+        android:id="@+id/btn_no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_data"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="50dp"
+        android:layout_toRightOf="@id/btn_ya"
+        android:background="@color/colorPrimary"
+        android:text="Tidak"
+        android:textColor="#ffff" />
+
+</RelativeLayout>

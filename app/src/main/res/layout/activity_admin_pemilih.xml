@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AdminPemilih">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchPemilih"
+            android:layout_width="700dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_toLeftOf="@id/ivAddPemilih"
+            android:background="@drawable/rectangle"
+            app:queryHint="cari NIK" />
+
+        <ImageView
+            android:id="@+id/ivAddPemilih"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:onClick="addPemilih"
+            android:scaleType="centerCrop"
+            android:src="@drawable/icon_add" />
+    </RelativeLayout>
+
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:columnCount="5">
+
+        <TextView
+            android:layout_width="9dp"
+            android:layout_columnWeight="1"
+            android:background="@drawable/rectangle"
+            android:paddingLeft="5dp"
+            android:text="No."
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+
+        <TextView
+            android:layout_width="120dp"
+            android:layout_columnWeight="2"
+            android:background="@drawable/rectangle"
+            android:paddingLeft="5dp"
+            android:text="Nama"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="90dp"
+            android:layout_height="wrap_content"
+            android:layout_columnWeight="2"
+            android:background="@drawable/rectangle"
+            android:paddingLeft="5dp"
+            android:text="NIK"
+            android:textColor="#000"
+            android:textSize="16sp" />
+
+    </GridLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_containerPemilih"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

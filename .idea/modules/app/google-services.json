@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1067360368312",
+    "firebase_url": "https://epilkada.firebaseio.com",
+    "project_id": "epilkada",
+    "storage_bucket": "epilkada.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1067360368312:android:f55f7e10b8454f449ea64d",
+        "android_client_info": {
+          "package_name": "com.toxic.epilkada"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1067360368312-i8lh68roeubfamm39dk5t1e6reb5bqnf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.toxic.epilkada",
+            "certificate_hash": "23be45229a81aea941a91781ac70301ce9f53b5a"
+          }
+        },
+        {
+          "client_id": "1067360368312-ros6svirg1i03ql9v182tn19rjt8frvq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCKTUQkzbpbC5VuAHoxl6OAzr47BVRPwfY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1067360368312-ros6svirg1i03ql9v182tn19rjt8frvq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
