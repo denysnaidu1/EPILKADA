@@ -19,6 +19,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.face.FaceDetection
 import com.jjoe64.graphview.series.BarGraphSeries
 import com.jjoe64.graphview.series.DataPoint
 import kotlinx.android.synthetic.main.activity_identifikasi_wajah.*
@@ -115,8 +117,8 @@ class IdentifikasiWajah : AppCompatActivity() {
         doAsync {
             traindata = ArrayList()
             for (a in 0 until foto.size) {
-                var tmp = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
-                var tmp1 = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
+                val tmp = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
+                val tmp1 = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
                 Utils.bitmapToMat(foto[a], tmp)
                 Imgproc.cvtColor(tmp, tmp1, Imgproc.COLOR_BGR2GRAY)
                 traindata.add(tmp1)
@@ -130,7 +132,7 @@ class IdentifikasiWajah : AppCompatActivity() {
                 lbl1!!.put(a, 0, a.toDouble())
                 Log.d("Isi Label2", a.toString())
                 //Log.d("Isi Label1",lbl1[a,0].toString())
-                var isi = lbl1!!.get(a, 0).component1()
+                val isi = lbl1!!.get(a, 0).component1()
                 Log.d("Isi Label3", isi.toString())
             }
             uiThread {
@@ -431,20 +433,22 @@ class IdentifikasiWajah : AppCompatActivity() {
                             Log.d("Orientation", "Normal")
                         }
                     }
+
+
                     //Crop Foto berdasarkan kotak merah
-                    val koefX = rotatedBitmap!!.width.toFloat() / frame_identifikasi.width
+                    /*val koefX = rotatedBitmap!!.width.toFloat() / frame_identifikasi.width
                     val koefY = rotatedBitmap.height.toFloat() / frame_identifikasi.height
 
-                    var x1 = view_borderWajah.left
-                    var y1 = view_borderWajah.top
-                    var x2 = view_borderWajah.width
-                    var y2 = view_borderWajah.height
-                    var cropStartX = Math.round(x1 * koefX)
-                    var cropStartY = Math.round(y1 * koefY)
-                    var cropWidthX = Math.round(x2 * koefX)
-                    var cropHeightY = Math.round(y2 * koefY)
+                    val x1 = view_borderWajah.left
+                    val y1 = view_borderWajah.top
+                    val x2 = view_borderWajah.width
+                    val y2 = view_borderWajah.height
+                    val cropStartX = Math.round(x1 * koefX)
+                    val cropStartY = Math.round(y1 * koefY)
+                    val cropWidthX = Math.round(x2 * koefX)
+                    val cropHeightY = Math.round(y2 * koefY)*/
                     var croppedBitmap: Bitmap? = null
-                    if (cropStartX + cropWidthX <= rotatedBitmap.width && cropStartY
+                    /*if (cropStartX + cropWidthX <= rotatedBitmap.width && cropStartY
                         + cropHeightY <= rotatedBitmap.height
                     ) {
                         croppedBitmap = Bitmap.createBitmap(
@@ -458,12 +462,58 @@ class IdentifikasiWajah : AppCompatActivity() {
                     Log.d(
                         "UkuranCropped",
                         croppedBitmap!!.width.toString() + "x" + croppedBitmap.height.toString()
-                    )
-                    var temp: Bitmap? = null
+                    )*/
+                    val detector = FaceDetection.getClient()
+                    val inputImage = InputImage.fromBitmap(rotatedBitmap!!,0)
+                    detector.process(inputImage)
+                        .addOnSuccessListener {
+                            if(it.isNullOrEmpty()){
+                                iv_recognized.setImageResource(R.drawable.unknown_face)
+                                btnNext.isEnabled = false
+                                dialog!!.dismiss()
+                                camera!!.startPreview()
+                                btn_Foto.isEnabled = true
+                                btnNext.setBackgroundColor(Color.GRAY)
+                                Toast.makeText(this@IdentifikasiWajah,"Wajah tidak ditemukan, harap arahkan kamera ke wajah Anda.",Toast.LENGTH_LONG).show()
+                            }
+                            else{
+                                for(face in it){
+                                    val bound = face.boundingBox
+                                    croppedBitmap = Bitmap.createBitmap(
+                                        rotatedBitmap!!,
+                                        bound.left,
+                                        bound.top,
+                                        bound.width(),
+                                        bound.height()
+                                    )
+                                    Log.d("FaceDetection",bound.toString())
+                                    Log.d(
+                                        "UkuranCropped",
+                                        croppedBitmap!!.width.toString() + "x" + croppedBitmap!!.height.toString()
+                                    )
+                                    var temp: Bitmap? = null
+                                    temp = Bitmap.createScaledBitmap(croppedBitmap!!, 180, 200, false)
+                                    iv_croppedImage.setImageBitmap(temp)
+                                    Log.d("Ukuran", temp.width.toString() + "x" + temp.height.toString())
+                                    prosesPengenalan(temp)
+                                }
+                            }
+
+                        }
+                        .addOnFailureListener {
+                            iv_recognized.setImageResource(R.drawable.unknown_face)
+                            btnNext.isEnabled = false
+                            dialog!!.dismiss()
+                            camera!!.startPreview()
+                            btn_Foto.isEnabled = true
+                            btnNext.setBackgroundColor(Color.GRAY)
+                            Toast.makeText(this@IdentifikasiWajah,it.localizedMessage,Toast.LENGTH_LONG).show()
+                        }
+                    /*var temp: Bitmap? = null
                     temp = Bitmap.createScaledBitmap(croppedBitmap, 180, 200, false)
                     iv_croppedImage.setImageBitmap(temp)
                     Log.d("Ukuran", temp.width.toString() + "x" + temp.height.toString())
-                    prosesPengenalan(temp)
+                    prosesPengenalan(temp)*/
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
