@@ -9,6 +9,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.net.Uri
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,9 +20,13 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.face.FaceDetection
 import com.toxic.epilkada.com.toxic.epilkada.fotoPemilih
+import com.toxic.epilkada.com.toxic.epilkada.utils.BottomSheetImageChooser
 import kotlinx.android.synthetic.main.activity_add_pemilih.*
 import kotlinx.android.synthetic.main.activity_add_pemilih.btnTambahkan
 import kotlinx.android.synthetic.main.activity_add_pemilih.edTanggal
@@ -33,6 +38,7 @@ import kotlinx.android.synthetic.main.activity_add_pemilih.spinnerKawin
 import kotlinx.android.synthetic.main.activity_add_pemilih.spinnerNegara
 import kotlinx.android.synthetic.main.activity_add_pemilih.spinnerPekerjaan
 import kotlinx.android.synthetic.main.activity_add_pemilih.tvHitungFoto
+import kotlinx.android.synthetic.main.activity_edit_pemilih.*
 import org.jetbrains.anko.doAsync
 import org.jetbrains.anko.uiThread
 import java.io.ByteArrayOutputStream
@@ -282,7 +288,7 @@ class AddPemilih : AppCompatActivity() {
     }
 
     var ambilGambar = false
-    var imageData: ArrayList<Bitmap>? = null
+    var imageData: ArrayList<Bitmap> = ArrayList()
     val indexRemoved: ArrayList<Int> = ArrayList()
 
     //Fungsi untuk melihat data foto yang sudah dipilih admin
@@ -302,10 +308,68 @@ class AddPemilih : AppCompatActivity() {
 
     //Function untuk membuka galeri admin
     private fun ambilFoto() {
-        val intent1 = Intent(Intent.ACTION_PICK)
-        intent1.setType("image/*")
-        intent1.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(intent1, 1)
+        val modalBottomSheet = BottomSheetImageChooser()
+        modalBottomSheet.show(supportFragmentManager,null)
+        modalBottomSheet.setOnGetPhotosCallback(object: BottomSheetImageChooser.GetPhotosCallback{
+            override fun onGetPhotos(photoUris: List<Uri>) {
+                buatDialog("Mempersiapkan Foto...")
+                var success=0
+                for(i in photoUris.indices){
+                    val inStream = applicationContext.contentResolver.openInputStream(
+                        photoUris[i]
+                    )
+                    val bmp = BitmapFactory.decodeStream(inStream)
+                    val normalizedBmp= TransformationUtils.rotateImage(bmp, 0)
+                    //imageData.add(rotateImage(bmp,0))
+                    inStream?.close()
+                    val detector = FaceDetection.getClient()
+                    val inputImage = InputImage.fromBitmap(normalizedBmp,0)
+                    var result : Bitmap?=null
+                    detector.process(inputImage)
+                        .addOnSuccessListener { faces->
+                            if(faces.isNullOrEmpty()){
+                                //Toast.makeText(this,"Wajah tidak ditemukan, harap arahkan kamera ke wajah Anda.",Toast.LENGTH_LONG).show()
+                            }
+                            else{
+                                success++
+                                for(face in faces){
+                                    val bound = face.boundingBox
+                                    try{
+                                        result = Bitmap.createBitmap(
+                                            normalizedBmp,
+                                            bound.left,
+                                            bound.top,
+                                            bound.width(),
+                                            bound.height()
+                                        )
+                                        var temp: Bitmap? = null
+                                        temp = Bitmap.createScaledBitmap(result!!, 180, 200, false)
+                                        imageData.add(temp)
+                                    }catch (exc:Exception){
+                                        Log.e("EditPemilih",exc.localizedMessage,exc)
+                                    }
+                                }
+                            }
+                            if(i==photoUris.size-1){
+                                Toast.makeText(this@AddPemilih,"Berhasil mendeteksi wajah dari $success/${photoUris.size} foto",Toast.LENGTH_LONG).show()
+                                ambilGambar = true
+                                tvHitungFoto!!.text = "Dipilih: " + imageData!!.size + " Foto"
+                                dialog!!.dismiss()
+                            }
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this@AddPemilih,it.localizedMessage,Toast.LENGTH_LONG).show()
+                            if(i==photoUris.size-1){
+                                ambilGambar = true
+                                tvHitungFoto!!.text = "Dipilih: " + imageData!!.size + " Foto"
+                                dialog!!.dismiss()
+                            }
+                        }
+                }
+
+            }
+
+        })
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

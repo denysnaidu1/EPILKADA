@@ -24,20 +24,19 @@ class ShowCamera(context: Context?, camera: Camera) : SurfaceView(context), Surf
         holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS)
     }
 
-    override fun surfaceChanged(p0: SurfaceHolder?, p1: Int, p2: Int, p3: Int) {
+    override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
 
     }
 
 
-    override fun surfaceDestroyed(p0: SurfaceHolder?) {
+    override fun surfaceDestroyed(p0: SurfaceHolder) {
         cam.stopPreview()
         cam.release()
         Log.d("CameraDestroy","Camera stopped")
         //cam.release()
     }
 
-    @RequiresApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    override fun surfaceCreated(p0: SurfaceHolder?) {
+    override fun surfaceCreated(p0: SurfaceHolder) {
         val params = cam.parameters
         val sizes = params.supportedPreviewSizes
         var mSize: Camera.Size? = null

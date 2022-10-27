@@ -29,10 +29,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <FrameLayout
+                <!--<FrameLayout
                     android:id="@+id/frame_camera"
                     android:layout_width="match_parent"
-                    android:layout_height="550dp" />
+                    android:layout_height="550dp" />-->
+
+                <androidx.camera.view.PreviewView
+                    android:id="@+id/frame_camera"
+                    android:layout_width="match_parent"
+                    android:layout_height="500dp"/>
 
                 <View
                     android:id="@+id/view_border"
@@ -49,11 +54,11 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="15dp"
                 android:background="@color/colorPrimary"
-                android:onClick="btn_capture"
+                android:onClick="captureImg"
                 android:text="Foto"
                 android:textColor="#fff" />
 
-            <TextView
+            <!--<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="15dp"
@@ -99,13 +104,14 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
                 android:textColor="#000"
-                android:textSize="14sp" />
+                android:textSize="14sp" />-->
 
             <TextView
                 android:id="@+id/textNIK"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
                 android:text="Hasil Normalisasi NIK:\n"
                 android:textColor="#000"
                 android:textSize="14sp" />

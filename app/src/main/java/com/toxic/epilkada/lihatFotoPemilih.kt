@@ -46,12 +46,12 @@ class lihatFotoPemilih : DialogFragment() {
         // Inflate the layout for this fragment
         val view=inflater.inflate(R.layout.fragment_lihat_foto_pemilih, container, true)
         //val gridLayout=view.findViewById<GridView>(R.id.gridContent)
-        val dataFoto=this.arguments!!.getParcelable<fotoPemilih>("BUNDLE_FOTO")
+        val dataFoto=this.requireArguments().getParcelable<fotoPemilih>("BUNDLE_FOTO")
         Log.d("Fragment",dataFoto!!.listFoto.size.toString())
         val rv=view.findViewById<RecyclerView>(R.id.rvContent)
         val layoutManager=GridLayoutManager(this.context,4)
-        val adapter=RecycleViewAdapter(dataFoto,this.context!!)
-        var btnConfirm: Button =view.findViewById(R.id.btnConfirm)
+        val adapter=RecycleViewAdapter(dataFoto,this.requireContext())
+        val btnConfirm: Button =view.findViewById(R.id.btnConfirm)
         btnConfirm.setOnClickListener {
             this.dismiss()
         }
@@ -80,9 +80,10 @@ class lihatFotoPemilih : DialogFragment() {
             return arr.listFoto.size
         }
 
-        override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+        override fun onBindViewHolder(holder: MyViewHolder, index: Int) {
+            val position = holder.adapterPosition
             holder.ivImage.setImageBitmap(arr.listFoto[position])
-            holder.tvItem.text="Gambar "+position.toString()
+            holder.tvItem.text="Gambar ${position+1}"
             holder.ivImage.setOnClickListener {
                 Log.d("Testing", position.toString())
 

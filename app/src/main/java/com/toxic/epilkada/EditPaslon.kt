@@ -38,7 +38,7 @@ class EditPaslon : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_paslon)
-        id=intent.getStringExtra("EXTRA_ID")
+        id=intent!!.getStringExtra("EXTRA_ID")!!
         dialog = ProgressDialog(this@EditPaslon)
         dialog!!.setMessage("Mempersiapkan Data...\nProses membutuhkan jaringan internet")
         dialog!!.window!!.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
