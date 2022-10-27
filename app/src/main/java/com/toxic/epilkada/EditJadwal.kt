@@ -43,7 +43,7 @@ class EditJadwal : AppCompatActivity() {
 
         if (intentKabKot.isNullOrEmpty()) {
             statusWilayah = "provinsi"
-            var wilayahLama = intentProvinsi.split(',')
+            var wilayahLama = intentProvinsi!!.split(',')
             tv_wilayahLama.text = "Wilayah lama -> "+wilayahLama[1]
             idWilayahLama = wilayahLama[2]
             idJadwalLama = wilayahLama[0]

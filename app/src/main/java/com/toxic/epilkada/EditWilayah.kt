@@ -26,7 +26,7 @@ class EditWilayah : AppCompatActivity() {
     }
 
     private fun loadData() {
-        defaultId=intent.getStringExtra("EXTRA_ID")
+        defaultId=intent!!.getStringExtra("EXTRA_ID")!!
         dataExtra=defaultId.split(",")
         if(dataExtra!![1].equals("provinsi")){
             FirebaseFirestore.getInstance().collection("wilayah").document(dataExtra!![0])

@@ -34,10 +34,12 @@
             android:parentActivityName=".AdminMain"/>
         <activity android:name=".EditPemilih"
             android:label="Edit Pemilih"
-            android:parentActivityName=".AdminPemilih"/>
+            android:parentActivityName=".AdminPemilih"
+            android:screenOrientation="portrait"/>
         <activity android:name=".AddPemilih"
             android:label="Input Pemilih"
-            android:parentActivityName=".AdminPemilih"/>
+            android:parentActivityName=".AdminPemilih"
+            android:screenOrientation="portrait"/>
         <activity android:name=".AdminPemilih"
             android:label="Data Pemilih"
             android:parentActivityName=".AdminMain"/>
@@ -116,7 +118,8 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/AppThemeHome">
+            android:theme="@style/AppThemeHome"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

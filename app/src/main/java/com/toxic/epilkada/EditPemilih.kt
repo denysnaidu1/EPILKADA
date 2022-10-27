@@ -4,13 +4,18 @@ import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.graphics.Matrix
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.util.Log
 import android.view.View
@@ -18,13 +23,18 @@ import android.view.WindowManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.MutableLiveData
+import com.bumptech.glide.load.resource.bitmap.TransformationUtils.rotateImage
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import com.google.mlkit.vision.common.InputImage
+import com.google.mlkit.vision.face.FaceDetection
 import com.toxic.epilkada.com.toxic.epilkada.fotoPemilih
+import com.toxic.epilkada.com.toxic.epilkada.utils.BottomSheetImageChooser
 import kotlinx.android.synthetic.main.activity_add_pemilih.*
 import kotlinx.android.synthetic.main.activity_edit_pemilih.*
 import kotlinx.android.synthetic.main.activity_edit_pemilihan.*
@@ -37,6 +47,12 @@ import kotlin.collections.ArrayList
 
 class EditPemilih : AppCompatActivity() {
 
+    var PERMISSIONS = arrayOf(
+        android.Manifest.permission.CAMERA,
+        android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+        android.Manifest.permission.READ_EXTERNAL_STORAGE
+    )
+    final val PERMISSION_ALL: Int = 1
     val jenisNegara = arrayOf(
         "WNI",
         "WNA"
@@ -164,9 +180,9 @@ class EditPemilih : AppCompatActivity() {
 
         edTanggalPemilih.setOnClickListener {
             val calendar: Calendar = Calendar.getInstance()
-            var day: Int = calendar.get(Calendar.DAY_OF_MONTH)
-            var month: Int = calendar.get(Calendar.MONTH)
-            var year: Int = calendar.get(Calendar.YEAR)
+            val day: Int = calendar.get(Calendar.DAY_OF_MONTH)
+            val month: Int = calendar.get(Calendar.MONTH)
+            val year: Int = calendar.get(Calendar.YEAR)
             val picker = DatePickerDialog(
                 this,
                 DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
@@ -179,7 +195,7 @@ class EditPemilih : AppCompatActivity() {
             )
             picker.show()
         }
-        loadData()
+        checkPermission()
     }
 
     var stringFotoLama = ArrayList<String>()
@@ -257,18 +273,24 @@ class EditPemilih : AppCompatActivity() {
                 //Function untuk mendownload data foto dari firebase storage
                 val firebaseStorage = FirebaseStorage.getInstance()
                 var mStorageRef: StorageReference? = null
-                for (a in stringFotoLama) {
-                    mStorageRef = firebaseStorage.getReferenceFromUrl(a)
-                    mStorageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener {
-                        gg = BitmapFactory.decodeByteArray(it, 0, it.size)
-                        fotoLama!!.add(gg!!)
-                        Log.d("Berhasil", "Berhasil buka")
-                        if (fotoLama!!.size == stringFotoLama.size) {
-                            dialog!!.dismiss()
-                        }
-                    }.addOnFailureListener {
+                if(stringFotoLama.size>0){
+                    for (a in stringFotoLama) {
+                        mStorageRef = firebaseStorage.getReferenceFromUrl(a)
+                        mStorageRef.getBytes(Long.MAX_VALUE).addOnSuccessListener { img->
+                            gg = BitmapFactory.decodeByteArray(img, 0, img.size)
+                            //gg?.let { decodedBmp-> trainImage(decodedBmp) }
+                            fotoLama!!.add(gg!!)
+                            Log.d("Berhasil", "Berhasil buka")
+                            if (fotoLama.size == stringFotoLama.size) {
+                                dialog!!.dismiss()
+                            }
+                        }.addOnFailureListener {
 
+                        }
                     }
+                }else{
+                    Log.d("Berhasil", "Berhasil buka")
+                    dialog!!.dismiss()
                 }
             }
     }
@@ -327,29 +349,102 @@ class EditPemilih : AppCompatActivity() {
         Log.d("CekData", gol_darah + nilaiAgama)
         val imageByte: ArrayList<ByteArray> = ArrayList()
         buatDialog("Menyimpan Data.\n Proses membutuhkan jaringan internet..")
+        //train old photos
+        /*if(fotoLama!=null){
+            for(foto in fotoLama){
+                trainImage(foto)
+            }
+        }*/
+        //=====================
         if (!imageData.isNullOrEmpty()) {
-
-            doAsync {
-                for (i in 0 until imageData!!.size) {
-                    val imageByteArray: ByteArrayOutputStream = ByteArrayOutputStream()
-                    imageData!![i].compress(Bitmap.CompressFormat.JPEG, 100, imageByteArray)
-                    imageByte.add(imageByteArray.toByteArray())
-                    Log.d("index i", i.toString())
-                }
-                uiThread {
-                    Log.d("jalankan firebase", "firebaseee")
-                    addFirebaseData(imageByte)
+            imageData?.let{
+                doAsync {
+                    for (i in 0 until it.size) {
+                        val imageByteArray: ByteArrayOutputStream = ByteArrayOutputStream()
+                        it[i].compress(Bitmap.CompressFormat.JPEG, 100, imageByteArray)
+                        imageByte.add(imageByteArray.toByteArray())
+                        Log.d("index i", i.toString())
+                    }
+                    uiThread {
+                        Log.d("jalankan firebase", "firebaseee")
+                        addFirebaseData(imageByte)
+                    }
                 }
             }
+
         }
         else{
             addFirebaseData(imageByte)
         }
     }
 
+    fun trainImage(bitmap:Bitmap){
+        val detector = FaceDetection.getClient()
+        val inputImage = InputImage.fromBitmap(bitmap,0)
+        var result : Bitmap?=null
+        detector.process(inputImage)
+            .addOnSuccessListener { faces->
+                if(faces.isNullOrEmpty()){
+                    Toast.makeText(this,"Wajah tidak ditemukan, harap arahkan kamera ke wajah Anda.",Toast.LENGTH_LONG).show()
+                }
+                else{
+                    for(face in faces){
+                        val bound = face.boundingBox
+                        try{
+                            result = Bitmap.createBitmap(
+                                bitmap,
+                                bound.left,
+                                bound.top,
+                                bound.width(),
+                                bound.height()
+                            )
+                            var temp: Bitmap? = null
+                            temp = Bitmap.createScaledBitmap(result!!, 180, 200, false)
+                            imageData.add(temp)
+                            if(imageData.size==(fotoLama?.size?:0)-1){
+                                val imageByte: ArrayList<ByteArray> = ArrayList()
+                                imageData.let{
+                                    doAsync {
+                                        for (i in 0 until it.size) {
+                                            val imageByteArray: ByteArrayOutputStream = ByteArrayOutputStream()
+                                            it[i].compress(Bitmap.CompressFormat.JPEG, 100, imageByteArray)
+                                            imageByte.add(imageByteArray.toByteArray())
+                                            Log.d("index i", i.toString())
+                                        }
+                                        uiThread {
+                                            Log.d("jalankan firebase", "firebaseee")
+                                            addFirebaseData(imageByte)
+                                        }
+                                    }
+                                }
+                            }
+                            /*fotoLama!!.add(result!!)
+                            Log.d("Berhasil", "Berhasil buka")
+                            if (fotoLama.size == stringFotoLama.size) {
+                                dialog!!.dismiss()
+                            }*/
+                        }catch (exc:Exception){
+                            Log.e("EditPemilih",exc.localizedMessage,exc)
+                        }
+
+                        /*Log.d("FaceDetection",bound.toString())
+                        Log.d(
+                            "UkuranCropped",
+                            croppedBitmap!!.width.toString() + "x" + croppedBitmap.height.toString()
+                        )
+                        result = Bitmap.createScaledBitmap(croppedBitmap, 180, 200, false)*/
+                    }
+                }
+
+            }
+            .addOnFailureListener {
+                Toast.makeText(this,it.localizedMessage,Toast.LENGTH_LONG).show()
+            }
+    }
+
     private fun addFirebaseData(imageByte: ArrayList<ByteArray>) {
         if (!imageByte.isNullOrEmpty()) {
-            var stringFoto: ArrayList<String> = ArrayList()
+            val stringFoto: ArrayList<String> = ArrayList()
             for (i in 0 until imageByte.size) {
                 val imageRef =
                     FirebaseStorage.getInstance().getReferenceFromUrl("gs://epilkada.appspot.com/")
@@ -485,15 +580,93 @@ class EditPemilih : AppCompatActivity() {
     }
 
     //Function untuk membuka galeri admin
+    var ambilGambar = false
+    var imageData: ArrayList<Bitmap> = ArrayList()
     fun pilihFoto(view: View){
-        val intent1 = Intent(Intent.ACTION_PICK)
-        intent1.setType("image/*")
-        intent1.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
-        startActivityForResult(intent1, 1)
+        val modalBottomSheet = BottomSheetImageChooser()
+        modalBottomSheet.show(supportFragmentManager,null)
+        modalBottomSheet.setOnGetPhotosCallback(object:BottomSheetImageChooser.GetPhotosCallback{
+            override fun onGetPhotos(photoUris: List<Uri>) {
+                /*for (i in 0 until data.clipData!!.itemCount) {
+                    val inStream = applicationContext.contentResolver.openInputStream(
+                        data.clipData!!.getItemAt(i).uri
+                    )
+                    val bmp = BitmapFactory.decodeStream(inStream)
+                    imageData!!.add(rotateImage(bmp, 90f)!!)
+                    inStream!!.close()
+                }*/
+                buatDialog("Mempersiapkan Foto...")
+                var success=0
+                for(i in photoUris.indices){
+                    val inStream = applicationContext.contentResolver.openInputStream(
+                        photoUris[i]
+                    )
+                    val bmp = BitmapFactory.decodeStream(inStream)
+                    val normalizedBmp=rotateImage(bmp,0)
+                    //imageData.add(rotateImage(bmp,0))
+                    inStream?.close()
+                    val detector = FaceDetection.getClient()
+                    val inputImage = InputImage.fromBitmap(normalizedBmp,0)
+                    var result : Bitmap?=null
+                    detector.process(inputImage)
+                        .addOnSuccessListener { faces->
+                            if(faces.isNullOrEmpty()){
+                                //Toast.makeText(this,"Wajah tidak ditemukan, harap arahkan kamera ke wajah Anda.",Toast.LENGTH_LONG).show()
+                            }
+                            else{
+                                success++
+                                for(face in faces){
+                                    val bound = face.boundingBox
+                                    try{
+                                        result = Bitmap.createBitmap(
+                                            normalizedBmp,
+                                            bound.left,
+                                            bound.top,
+                                            bound.width(),
+                                            bound.height()
+                                        )
+                                        var temp: Bitmap? = null
+                                        temp = Bitmap.createScaledBitmap(result!!, 180, 200, false)
+                                        imageData.add(temp)
+                                    }catch (exc:Exception){
+                                        Log.e("EditPemilih",exc.localizedMessage,exc)
+                                    }
+                                }
+                            }
+                            if(i==photoUris.size-1){
+                                Toast.makeText(this@EditPemilih,"Berhasil mendeteksi wajah dari $success/${photoUris.size} foto",Toast.LENGTH_LONG).show()
+                                ambilGambar = true
+                                val jlhFotoBaru = fotoLama!!.size + imageData!!.size
+                                tvHitungFotoLama!!.text = "Dipilih: " + jlhFotoBaru + " Foto"
+                                cekImageData=false
+                                dialog!!.dismiss()
+                            }
+
+                        }
+                        .addOnFailureListener {
+                            Toast.makeText(this@EditPemilih,it.localizedMessage,Toast.LENGTH_LONG).show()
+                            if(i==photoUris.size-1){
+                                ambilGambar = true
+                                val jlhFotoBaru = fotoLama!!.size + imageData!!.size
+                                tvHitungFotoLama!!.text = "Dipilih: " + jlhFotoBaru + " Foto"
+                                cekImageData=false
+                                dialog!!.dismiss()
+                            }
+                        }
+                }
+                /*Toast.makeText(
+                    applicationContext,
+                    "Berhasil mendapatkan foto " + imageData!!.size,
+                    Toast.LENGTH_SHORT
+                ).show()*/
+
+            }
+
+        })
     }
 
-    var ambilGambar = false
-    var imageData: ArrayList<Bitmap>? = null
+    /*var ambilGambar = false
+    var imageData: ArrayList<Bitmap> = ArrayList()
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null && data.clipData != null) {
@@ -504,10 +677,10 @@ class EditPemilih : AppCompatActivity() {
             //Function ambil data dari galeri admin
             doAsync {
                 for (i in 0 until data.clipData!!.itemCount) {
-                    var inStream = applicationContext.contentResolver.openInputStream(
+                    val inStream = applicationContext.contentResolver.openInputStream(
                         data.clipData!!.getItemAt(i).uri
                     )
-                    var bmp = BitmapFactory.decodeStream(inStream)
+                    val bmp = BitmapFactory.decodeStream(inStream)
                     imageData!!.add(rotateImage(bmp, 90f)!!)
                     inStream!!.close()
                 }
@@ -518,14 +691,14 @@ class EditPemilih : AppCompatActivity() {
                         "Berhasil mendapatkan foto " + imageData!!.size,
                         Toast.LENGTH_SHORT
                     ).show()
-                    var jlhFotoBaru = fotoLama!!.size + imageData!!.size
+                    val jlhFotoBaru = fotoLama!!.size + imageData!!.size
                     tvHitungFotoLama!!.text = "Dipilih: " + jlhFotoBaru + " Foto"
                     cekImageData=false
                     dialog!!.dismiss()
                 }
             }
         }
-    }
+    }*/
 
     private var dialog: ProgressDialog? = null
     fun buatDialog(text: String) {
@@ -536,10 +709,40 @@ class EditPemilih : AppCompatActivity() {
     }
 
     private fun rotateImage(bitmap: Bitmap?, i: Float): Bitmap? {
-        var matrix = Matrix()
+        val matrix = Matrix()
         matrix.postRotate(i)
         return Bitmap.createBitmap(bitmap!!, 0, 0, bitmap.width, bitmap.height, matrix, true)
 
+    }
+
+
+    fun hasPermissions(context: Context, vararg permissions: String): Boolean = permissions.all {
+        ActivityCompat.checkSelfPermission(context, it) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun checkPermission() {
+        if (!hasPermissions(this, *PERMISSIONS)) {
+            ActivityCompat.requestPermissions(this, PERMISSIONS, PERMISSION_ALL)
+        }
+        else{
+            loadData()
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == PERMISSION_ALL) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                checkPermission()
+            } else {
+                Toast.makeText(this, "Aplikasi perlu menggunakan akses", Toast.LENGTH_LONG).show()
+                checkPermission()
+            }
+        }
     }
 
 }

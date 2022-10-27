@@ -114,31 +114,61 @@ class IdentifikasiWajah : AppCompatActivity() {
     }
 
     private fun trainingData() {
-        doAsync {
-            traindata = ArrayList()
-            for (a in 0 until foto.size) {
-                val tmp = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
-                val tmp1 = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
-                Utils.bitmapToMat(foto[a], tmp)
-                Imgproc.cvtColor(tmp, tmp1, Imgproc.COLOR_BGR2GRAY)
-                traindata.add(tmp1)
-            }
-            lbl1 = Mat(traindata.size, 1, CvType.CV_32SC1)
-            for (a in 0 until traindata.size) {
-                Log.d(
-                    "UkuranTrain",
-                    "Foto k-" + a.toString() + foto[a].width.toString() + "x" + foto[a].height.toString()
-                )
-                lbl1!!.put(a, 0, a.toDouble())
-                Log.d("Isi Label2", a.toString())
-                //Log.d("Isi Label1",lbl1[a,0].toString())
-                val isi = lbl1!!.get(a, 0).component1()
-                Log.d("Isi Label3", isi.toString())
-            }
-            uiThread {
-                dialog!!.dismiss()
-            }
+        traindata = ArrayList()
+        //iv_recognized.setImageBitmap(foto[0])
+        for (a in 0 until foto.size) {
+            Log.d("UkuranFoto",a.toString())
+            val tmp = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
+            val tmp1 = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
+            Utils.bitmapToMat(foto[a], tmp)
+            Imgproc.cvtColor(tmp, tmp1, Imgproc.COLOR_BGR2GRAY)
+            traindata.add(tmp1)
         }
+        lbl1 = Mat(traindata.size, 1, CvType.CV_32SC1)
+        for (a in 0 until traindata.size) {
+            Log.d(
+                "UkuranTrain",
+                "Foto k-" + a.toString() + foto[a].width.toString() + "x" + foto[a].height.toString()
+            )
+            lbl1!!.put(a, 0, a.toDouble())
+            Log.d("Isi Label2", a.toString())
+            //Log.d("Isi Label1",lbl1[a,0].toString())
+            val isi = lbl1!!.get(a, 0).component1()
+            Log.d("Isi Label3", isi.toString())
+        }
+        dialog!!.dismiss()
+        /*try{
+            doAsync {
+                traindata = ArrayList()
+                iv_recognized.setImageBitmap(foto[0])
+                for (a in 0 until foto.size) {
+                    Log.d("UkuranFoto",a.toString())
+                    val tmp = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
+                    val tmp1 = Mat(foto[0].width, foto[0].height, CvType.CV_8UC1)
+                    Utils.bitmapToMat(foto[a], tmp)
+                    Imgproc.cvtColor(tmp, tmp1, Imgproc.COLOR_BGR2GRAY)
+                    traindata.add(tmp1)
+                }
+                lbl1 = Mat(traindata.size, 1, CvType.CV_32SC1)
+                for (a in 0 until traindata.size) {
+                    Log.d(
+                        "UkuranTrain",
+                        "Foto k-" + a.toString() + foto[a].width.toString() + "x" + foto[a].height.toString()
+                    )
+                    lbl1!!.put(a, 0, a.toDouble())
+                    Log.d("Isi Label2", a.toString())
+                    //Log.d("Isi Label1",lbl1[a,0].toString())
+                    val isi = lbl1!!.get(a, 0).component1()
+                    Log.d("Isi Label3", isi.toString())
+                }
+                uiThread {
+                    dialog!!.dismiss()
+                }
+            }
+        }catch (exc:Exception){
+            Log.e("ErroTrainData",exc.localizedMessage,exc)
+        }*/
+
     }
 
     override fun onBackPressed() {
@@ -171,7 +201,8 @@ class IdentifikasiWajah : AppCompatActivity() {
         var model = Mat()
         imageInput.reshape(0, 1).convertTo(model, CvType.CV_64FC1)
 
-        val facerec: EigenFaceRecognizer = EigenFaceRecognizer.create(0, 5300.0)
+        /*val facerec: EigenFaceRecognizer = EigenFaceRecognizer.create(0, 5300.0)*/
+        val facerec: EigenFaceRecognizer = EigenFaceRecognizer.create(0, 3500.0)
         facerec.train(traindata, lbl1)
         var predicted: IntArray = IntArray(2)
         predicted[0] = 0
@@ -267,9 +298,9 @@ class IdentifikasiWajah : AppCompatActivity() {
 
             //Hitung Euclidean Distance
             var distance1:ArrayList<Int> = ArrayList()
-            for(i in 0 until 10){
+            for(i in 0 until traindata.size){
                 var temp=0.0
-                for(j in 0 until 10){
+                for(j in 0 until traindata.size){
                     var tempGG=wDataTest[j,0].get(0)-wsetTranspose[j,i].get(0)
                     var hasilPangkat=tempGG.pow(2.0)
                     temp += hasilPangkat
@@ -342,6 +373,10 @@ class IdentifikasiWajah : AppCompatActivity() {
             //================================================================================
 
         } catch (e: Exception) {
+            btnNext.isEnabled = false
+            dialog!!.dismiss()
+            camera!!.startPreview()
+            btn_Foto.isEnabled = true
             e.printStackTrace()
         }
     }

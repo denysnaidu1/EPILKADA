@@ -29,7 +29,7 @@
             android:layout_below="@id/iv_garuda"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="15dp"
-            android:text="PILKADA INDONESIA 2020"
+            android:text="PILKADA INDONESIA 2024"
             android:textColor="#ffff"
             android:textSize="20sp"
             android:textStyle="bold" />
